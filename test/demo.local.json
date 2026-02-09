@@ -1,0 +1,32 @@
+{
+    "name": "local mp4 pipeline",
+    "stages":[
+        {
+            "name": "mp4 meta checker - temporal",
+            "class": "MP4MetaChecker",
+            "config": {
+                "min_fps": 30,
+                "min_sec": 15,
+                "max_sec": 900
+            },
+            "desc": "filter out videos that are too short/long"
+        },
+        {
+            "name": "mp4 meta checker - spatial",
+            "class": "MP4MetaChecker",
+            "config": {
+                "min_pixel": 9216,
+                "max_pixel": 3686400
+            }
+        },
+        {
+            "name": "mp4 sampler",
+            "class": "MP4Sampler",
+            "config": {
+                "sample_fps": 1,
+                "num_frames": 1
+            },
+            "desc": "sample 1 frame per second, and only keep 1 frame for each video, final shape ndarray of (B, H, W, 3), C of BGR order, following cv2 convention"
+        }
+    ]
+}

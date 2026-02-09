@@ -1,0 +1,14 @@
+{
+    "name": "remote img checker pipeline",
+    "initial_modality": "ndarray",
+    "stages":[
+        {
+            "name": "random filter",
+            "class": "RandomFilter",
+            "config": {
+                "thres": 0.5
+            },
+            "desc": "just an random filter for testing"
+        }
+    ]
+}
