@@ -55,6 +55,7 @@ class DPAASClient:
             stages=cfg["stages"],
             initial_modality=cfg.get("initial_modality", MODAL_FILEPATH)
         )
+        self.remote_pipeline_print = ret.get("remote_pipeline_print", "No remote pipeline info received")
 
     def local_check(self, filenames, fileobjs, progress):
         """

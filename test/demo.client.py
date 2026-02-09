@@ -22,6 +22,10 @@ print(f"dump local pipeline for task {task} to {save_dir}/local_pipeline.txt")
 with open(os.path.join(save_dir, "local_pipeline.txt"), "w") as f:
     f.write(str(client.local_pipeline))
 
+print(f"dump remote pipeline info for task {task} to {save_dir}/remote_pipeline.txt")
+with open(os.path.join(save_dir, "remote_pipeline.txt"), "w") as f:
+    f.write(client.remote_pipeline_print)
+
 filepaths = glob.glob("scannetpp/*.mp4")
 filenames = [os.path.basename(fp) for fp in filepaths]
 

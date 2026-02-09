@@ -75,7 +75,11 @@ class DPAASServer:
             task_name = request.args.get("task")
             if task_name not in self.tasks:
                 return jsonify({"error": f"Unknown task: {task_name}"}), 404
-            return jsonify({"pipeline": self.tasks[task_name]["local_config"]})
+            return jsonify(
+                {
+                    "pipeline": self.tasks[task_name]["local_config"],
+                    "remote_pipeline_print": str(self.tasks[task_name]["remote_pipeline"])
+                })
 
         @self.app.route("/check", methods=["POST"])
         def check():
