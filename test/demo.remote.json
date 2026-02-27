@@ -1,14 +1,17 @@
 {
     "name": "remote img checker pipeline",
     "initial_modality": "ndarray",
-    "stages":[
-        {
-            "name": "random filter",
-            "class": "RandomFilter",
+    "stages":[        {
+            "name": "vlm viewpoint detector",
+            "class": "VLMViewpointDetector",
             "config": {
-                "thres": 0.5
+                "api_key": "YOUR_API_KEY_HERE",
+                "api_base": "https://api.openai.com/v1",
+                "model_name": "gemini-3-pro-preview",
+                "confidence_threshold": 0.85,
+                "allow_third_person": false
             },
-            "desc": "just an random filter for testing"
+            "desc": "detect first-person vs third-person viewpoint using VLM"
         }
     ]
 }

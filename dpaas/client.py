@@ -49,6 +49,8 @@ class DPAASClient:
 
     def handshake(self):
         ret = self._url_get(f"/handshake?task={self.task}")
+        if ret is None:
+            raise ConnectionError(f"Failed to connect to server {self.domain} for handshake.")
         cfg = ret.get("pipeline", None)
         self.local_pipeline = Pipeline(
             name=cfg.get("name", "UnnamedPipeline"),

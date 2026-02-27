@@ -5,26 +5,39 @@
             "name": "mp4 meta checker - temporal",
             "class": "MP4MetaChecker",
             "config": {
-                "min_fps": 30,
+                "min_fps": 20,
                 "min_sec": 15,
                 "max_sec": 900
             },
             "desc": "filter out videos that are too short/long"
-        },
-        {
+        },        {
             "name": "mp4 meta checker - spatial",
             "class": "MP4MetaChecker",
             "config": {
-                "min_pixel": 9216,
+                "min_pixel": 921600,
                 "max_pixel": 3686400
             }
-        },
-        {
+        },        {
+            "name": "fast cut detector",
+            "class": "FastCutDetector",
+            "config": {
+                "scene_threshold": 30.0,
+                "layout_threshold": 0.15,
+                "min_clip_duration": 1.0,
+                "density_config": {
+                    "window_size": 30.0,
+                    "max_cuts_per_window": 10,
+                    "rapid_cut_cpm_threshold": 15.0
+                }
+            },
+            "desc": "filter out videos with too many rapid cuts"
+        },        {
             "name": "mp4 sampler",
             "class": "MP4Sampler",
             "config": {
                 "sample_fps": 1,
-                "num_frames": 1
+                "num_frames": 1,
+                "target_max_side": 720
             },
             "desc": "sample 1 frame per second, and only keep 1 frame for each video, final shape ndarray of (B, H, W, 3), C of BGR order, following cv2 convention"
         }

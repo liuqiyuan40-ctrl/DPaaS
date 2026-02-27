@@ -7,11 +7,10 @@ from dpaas.server import DPAASServer
 
 server = DPAASServer(
     host="0.0.0.0",
-    port=8080,
-    tasks={
+    port=8080,    tasks={
         "test_task": {
-            "local": "demo.local.json",
-            "remote": "demo.remote.json",
+            "local": os.path.join(os.path.dirname(__file__), "demo.local.json"),
+            "remote": os.path.join(os.path.dirname(__file__), "demo.remote.json"),
         }
     },
 )

@@ -62,10 +62,31 @@ The demo will process MP4 videos through a multi-stage filtering pipeline and sa
 
 ## Built-in Filters
 
-- **MP4MetaChecker**: Validate video metadata (fps, duration, resolution)
-- **MP4Sampler**: Sample frames from videos at specified intervals
+- **MP4MetaChecker**: Validate video metadata (fps, duration, resolution). We enforce strict spatial and temporal checks (e.g., resolution >= 720P, framerate > 20 fps).
+- **FastCutDetector**: Detect and filter out videos with excessive rapid cuts or scene changes. It analyzes cut density over a sliding window (e.g., max 10 cuts per 30s) and overall cuts per minute (CPM).
+- **MP4Sampler**: Sample frames from videos at specified intervals and resize them. For example, downsampling to 1 fps and resizing the maximum side to 720P before sending to the server to save bandwidth.
+- **VLMViewpointDetector**: Remote filter that uses Vision-Language Models (e.g., Gemini, GPT-4V) to detect first-person vs third-person viewpoints. It analyzes sampled frames and returns a confidence score.
 - **RandomFilter**: Probabilistic filter for testing
 - *(Extend by creating custom filters with `@dpaas_filter` decorator)*
+
+## Packaging for Suppliers
+
+You can package the client into a standalone executable for suppliers who do not have a Python environment installed.
+
+```bash
+# Install PyInstaller
+pip install pyinstaller
+
+# Build the executable using the provided spec file
+pyinstaller DPaaS_Client.spec
+```
+
+This will generate a `dist/DPaaS_Client.exe` file. 
+
+**Distribution to Suppliers:**
+1. Copy `dist/DPaaS_Client.exe` to a new folder.
+2. Create an empty `data/` folder next to the `.exe`.
+3. Send this folder to the supplier. They just need to place their `.mp4` videos in the `data/` folder and double-click the `.exe`. Results will be generated in a `demo_output/` folder.
 
 ## Project Structure
 

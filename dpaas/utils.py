@@ -14,7 +14,7 @@ def format_report(report):
         for i, (conf, reason) in enumerate(stage_reports):
             res += f"{conf:.2f}"
             if i < len(stage_reports) - 1:
-                res += " → "
+                res += " -> "
             else:
                 if reason:
                     res += f" ({reason})"

@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from dpaas.client import DPAASClient
 from dpaas.utils import format_report
 
-server = "http://0.0.0.0:8080"
+server = "http://127.0.0.1:8080"
 task = "test_task"
 save_dir = "demo_output"
 if os.path.exists(save_dir):
@@ -19,14 +19,19 @@ client = DPAASClient(server, task)
 client.handshake()
 
 print(f"dump local pipeline for task {task} to {save_dir}/local_pipeline.txt")
-with open(os.path.join(save_dir, "local_pipeline.txt"), "w") as f:
+with open(os.path.join(save_dir, "local_pipeline.txt"), "w", encoding="utf-8") as f:
     f.write(str(client.local_pipeline))
 
 print(f"dump remote pipeline info for task {task} to {save_dir}/remote_pipeline.txt")
-with open(os.path.join(save_dir, "remote_pipeline.txt"), "w") as f:
+with open(os.path.join(save_dir, "remote_pipeline.txt"), "w", encoding="utf-8") as f:
     f.write(client.remote_pipeline_print)
 
-filepaths = glob.glob("scannetpp/*.mp4")
+if getattr(sys, 'frozen', False):
+    base_dir = os.path.dirname(sys.executable)
+else:
+    base_dir = os.path.join(os.path.dirname(__file__), "..")
+
+filepaths = glob.glob(os.path.join(base_dir, "data", "*.mp4"))
 filenames = [os.path.basename(fp) for fp in filepaths]
 
 report = client.check(filenames, filepaths)
